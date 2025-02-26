@@ -1,0 +1,5 @@
+{
+  "required": "This field is required",
+  "isEmail": "Invalid email",
+  "isFQDN": "Domain is not valid"
+}
