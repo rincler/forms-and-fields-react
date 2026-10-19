@@ -145,8 +145,14 @@ const useForm = ({
     },
   };
 
+  const hasInvalidFields = Object.values(formState.fields).some(
+    (fieldState) => fieldState.status === FieldStatus.Invalid,
+  );
+  const visualStatus = hasInvalidFields ? FormStatus.Invalid : formState.status;
+
   return {
     formState,
+    visualStatus,
     setFormState,
     setFieldState,
     getFormOptionsForUpdatingFormState,

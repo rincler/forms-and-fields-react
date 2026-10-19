@@ -29,6 +29,7 @@ const Component: FC<PropsWithChildren<ComponentProps>> = ({
 }) => {
   const {
     formState,
+    visualStatus,
     getFormOptionsForUpdatingFormState,
     onChangeHandlerForUpdatingFormState,
     group,
@@ -112,6 +113,7 @@ const Component: FC<PropsWithChildren<ComponentProps>> = ({
         <button type="submit">Submit</button>
       </Form>
       {formState.submissionResult?.isPositive() && <div>Form successfully submitted</div>}
+      <div data-testid="visual-status">{visualStatus}</div>
       <button type="button" onClick={() => setState(state + 1)}>
         Update state
       </button>
@@ -136,6 +138,7 @@ describe("Form", () => {
     expect(screen.getByLabelText<HTMLInputElement>("Email").value).toBe("test@example.com");
     expect(screen.queryByText("Invalid value.")).not.toBeInTheDocument();
     expect(screen.getByText("Form successfully submitted")).toBeInTheDocument();
+    expect(screen.getByTestId("visual-status")).toHaveTextContent(FormStatus.PositiveSubmit);
   });
 
   test("submits invalid value", async () => {
@@ -154,6 +157,7 @@ describe("Form", () => {
     expect(screen.getByLabelText<HTMLInputElement>("Email").value).toBe("@example.com");
     expect(screen.getByText("Invalid value.")).toBeInTheDocument();
     expect(screen.queryByText("Form successfully submitted")).not.toBeInTheDocument();
+    expect(screen.getByTestId("visual-status")).toHaveTextContent(FormStatus.Invalid);
   });
 
   test("uses validation cache (initial form state is passed)", async () => {

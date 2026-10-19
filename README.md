@@ -247,11 +247,26 @@ This hook is used to access and manage the form state. If you pass an initial st
 | Key                                 | Type        | Description                                                                                                                                                                                                                                                                                     |
 |-------------------------------------|-------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | formState                           | `FormState` | The current state of the form.                                                                                                                                                                                                                                                                  |
+| visualStatus                        | `string`    | `FormStatus.Invalid` if at least one field in the form state has the invalid status, otherwise the form status. Unlike the form status, it takes into account fields validated separately (e.g. on typing). Use it, for example, to disable the submit button.                                |
 | setFormState                        | `function`  | The function that allows you to update the form state. Arguments: `formState: FormState`. Don't forget to pass `formState` to the `Form` component if you use this function.                                                                                                                    |
 | setFieldState                       | `function`  | The function that allows you to update the field state in the form state. Arguments: `stateFieldKey: string, fieldState: FieldState`. Don't forget to pass `formState` to the `Form` component if you use this function.                                                                        |
 | getFormOptionsForUpdatingFormState  | `function`  | The function that returns the options you need to pass to the `Form` component for updates to the current state of the form. Arguments: `formOptions: object = {}` - your options.                                                                                                              |
 | onChangeHandlerForUpdatingFormState | `function`  | The `onChange` handler for field elements that updates the field value in state. When you specify the `value` attribute (for controlled elements), React requires you to specify the `onChange` attribute. The `onChangeHandlerForUpdatingFormState` function is specifically for this purpose. |
 | group                               | `object`    | Helper methods (`get(fieldName: string)`, `add(fieldName: string)`, `delete(stateFieldKey: string)` to access and manage the state of a group of field elements (field elements with the same name). See the details [here](#groups).                                                           |
+
+**Important!** When a `Field` component is removed from JSX (e.g. by a condition), its state stays in the form state. So `visualStatus` still takes it into account, your code that reads `formState.fields` still sees it, and when the field is shown again, it gets the previous status and validation result. To avoid this, reset the field state when you hide the field:
+
+```tsx
+import { FieldStatus } from "forms-and-fields";
+
+setFieldState("phone", {
+  status: FieldStatus.No,
+  validationResult: null,
+  value: formState.fields.phone?.value,
+});
+```
+
+For a group, reset the state of each group field (keys from `group.get()`) or delete them via `group.delete()`.
 
 ### Validation of files
 
