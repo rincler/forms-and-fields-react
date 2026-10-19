@@ -1,7 +1,7 @@
 import Field from "../../src/Field";
 import Form from "../../src/Form";
 import React, { useState } from "react";
-import { SubmissionResult, ValidationResult } from "forms-and-fields";
+import { SubmissionResult, ValidationResult } from "../../src";
 import defaultFormOptions from "./defaultFormOptions";
 import useForm from "../../src/useForm";
 

@@ -17,11 +17,11 @@ the `FileValidator` or your own custom validators (including AJAX-based validati
 **JSX:**
 ```jsx
 import React from "react";
-import { SubmissionResult } from "forms-and-fields";
 import {
   Form,
   Field,
-  useForm
+  useForm,
+  SubmissionResult
 } from "forms-and-fields-react";
 
 function LoginForm() {
@@ -121,7 +121,7 @@ Find more examples in the [sandbox](./sandbox).
 
 ## Installation
 
-    npm install forms-and-fields forms-and-fields-react
+    npm install forms-and-fields-react
 
 ## Documentation
 
@@ -257,7 +257,7 @@ This hook is used to access and manage the form state. If you pass an initial st
 **Important!** When a `Field` component is removed from JSX (e.g. by a condition), its state stays in the form state. So `visualStatus` still takes it into account, your code that reads `formState.fields` still sees it, and when the field is shown again, it gets the previous status and validation result. To avoid this, reset the field state when you hide the field:
 
 ```tsx
-import { FieldStatus } from "forms-and-fields";
+import { FieldStatus } from "forms-and-fields-react";
 
 setFieldState("phone", {
   status: FieldStatus.No,

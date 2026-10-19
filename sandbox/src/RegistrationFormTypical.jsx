@@ -1,7 +1,7 @@
 import Field from "../../src/Field";
 import Form from "../../src/Form";
 import React from "react";
-import { SubmissionResult } from "forms-and-fields";
+import { SubmissionResult } from "../../src";
 import defaultFormOptions from "./defaultFormOptions";
 import useForm from "../../src/useForm";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import Field from "../../src/Field";
 import defaultFieldOptions from "./defaultFieldOptions";
-import { ValidationResult } from "forms-and-fields";
+import { ValidationResult } from "../../src";
 import useField from "../../src/useField";
 
 const fetchOk = async (input, init) => {

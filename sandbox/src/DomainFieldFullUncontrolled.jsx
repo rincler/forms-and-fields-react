@@ -1,7 +1,7 @@
 import React from "react";
 import Field from "../../src/Field";
 import defaultFieldOptions from "./defaultFieldOptions";
-import { FieldStatus } from "forms-and-fields";
+import { FieldStatus } from "../../src";
 
 const DomainFieldFullUncontrolled = () => {
   const fieldOptions = {

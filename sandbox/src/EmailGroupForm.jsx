@@ -1,4 +1,4 @@
-import { FieldStatus, SubmissionResult } from "forms-and-fields";
+import { FieldStatus, SubmissionResult } from "../../src";
 import Form from "../../src/Form";
 import Field from "../../src/Field";
 import React from "react";

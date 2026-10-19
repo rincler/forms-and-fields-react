@@ -1,7 +1,7 @@
 import Field from "../../src/Field";
 import Form from "../../src/Form";
 import React from "react";
-import { FieldStatus, SubmissionResult, ValidationResult } from "forms-and-fields";
+import { FieldStatus, SubmissionResult, ValidationResult } from "../../src";
 import defaultFormOptions from "./defaultFormOptions";
 
 const submit = () => SubmissionResult.positive();
