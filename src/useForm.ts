@@ -8,6 +8,11 @@ import {
 import React, { useState } from "react";
 import { FieldState, FormState } from "./types";
 
+const DEFAULT_FIELD_STATE: FieldState = {
+  status: FieldStatus.No,
+  validationResult: null,
+};
+
 const key = (fieldName: string, id: string) => {
   return `${fieldName}:${id}`;
 };
@@ -40,6 +45,20 @@ const useForm = ({
     }));
   };
 
+  const updateFieldState = (stateFieldKey: string, fieldState: Partial<FieldState>) => {
+    setFormState((formState) => ({
+      ...formState,
+      fields: {
+        ...formState.fields,
+        [stateFieldKey]: {
+          ...DEFAULT_FIELD_STATE,
+          ...formState.fields[stateFieldKey],
+          ...fieldState,
+        },
+      },
+    }));
+  };
+
   const getFieldElementKey = (fieldElement: FieldElement) => {
     return fieldElement.dataset.key || fieldElement.name;
   };
@@ -54,21 +73,10 @@ const useForm = ({
       }));
     },
     onFieldStatusChange: (status, validationResult, fieldElement) => {
-      const stateFieldKey = getFieldElementKey(fieldElement);
-      setFieldState(stateFieldKey, {
-        ...formState.fields[stateFieldKey],
-        status,
-        validationResult,
-      });
+      updateFieldState(getFieldElementKey(fieldElement), { status, validationResult });
     },
     onChange: (fieldValue, fieldElement) => {
-      const stateFieldKey = getFieldElementKey(fieldElement);
-      setFieldState(stateFieldKey, {
-        ...formState.fields[stateFieldKey],
-        status: formState.fields[stateFieldKey]?.status || FieldStatus.No,
-        validationResult: formState.fields[stateFieldKey]?.validationResult || null,
-        value: fieldValue,
-      });
+      updateFieldState(getFieldElementKey(fieldElement), { value: fieldValue });
     },
   };
 
@@ -105,13 +113,7 @@ const useForm = ({
       `[data-form-id="${containerElement!.dataset.formId}"]`,
     );
 
-    const stateFieldKey = getFieldElementKey(fieldElement);
-    setFieldState(stateFieldKey, {
-      ...formState.fields[stateFieldKey],
-      status: formState.fields[stateFieldKey]?.status || FieldStatus.No,
-      validationResult: formState.fields[stateFieldKey]?.validationResult || null,
-      value: field.getValue(),
-    });
+    updateFieldState(getFieldElementKey(fieldElement), { value: field.getValue() });
   };
 
   const group = {
@@ -125,10 +127,7 @@ const useForm = ({
           ...formState,
           fields: {
             ...formState.fields,
-            [newKey]: {
-              status: FieldStatus.No,
-              validationResult: null,
-            },
+            [newKey]: { ...DEFAULT_FIELD_STATE },
           },
         };
       });
