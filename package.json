@@ -34,7 +34,7 @@
   },
   "homepage": "https://github.com/rincler/forms-and-fields-react#readme",
   "dependencies": {
-    "forms-and-fields": "^4.0.0",
+    "forms-and-fields": "^4.1.0",
     "react-nanny": "^2.15.0"
   },
   "peerDependencies": {
